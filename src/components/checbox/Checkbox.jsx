@@ -6,7 +6,7 @@ const Checkbox = ({ checked = false, name = "", onClick = () => {} }) => {
 			onClick={onClick}
 			name={name}
 			className={`inline-flex items-center justify-center p-1 w-5 h-5 border-2 rounded cursor-pointer ${
-				checked ? "bg-primary border-primary" : "bg-white border-strock"
+				checked ? "bg-primary border-primary" : "bg-white dark:bg-transparent dark:border-darkStrock border-strock"
 			}`}
 		>
 			{/* <input

@@ -4,11 +4,12 @@ import FormGroup from "components/common/FormGroup";
 import { Input } from "components/input";
 import { Label } from "components/label";
 import LayoutAuthentication from "layouts/LayoutAuthentication";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useToggleValue } from "hooks/useToggleValue";
 
 const schema = Yup.object({
 	name: Yup.string().required("This field is required"),
@@ -29,12 +30,9 @@ const SignUpPage = () => {
 		resolver: yupResolver(schema),
 		mode: "onSubmit",
 	});
-	const [acceptTermm, setAcceptTerm] = useState(false);
 
-	const handleToggleTerm = () => {
-		console.log(acceptTermm)
-		setAcceptTerm(!acceptTermm);
-	};
+	const { value: acceptTermm, handleToggleValue: handleToggleTerm } =
+		useToggleValue();
 
 	const handleSignUp = (values) => {
 		console.log(values);
@@ -51,11 +49,11 @@ const SignUpPage = () => {
 					Sign In
 				</Link>
 			</p>
-			<button className="flex items-center justify-center w-full py-3 mb-5 text-base font-semibold border text-text2 border-strock rounded-xl gap-x-3">
+			<button className="flex items-center justify-center w-full py-3 mb-5 text-base font-semibold border dark:border-darkStrock text-text2 border-strock rounded-xl gap-x-3">
 				<img srcSet="/icon-google.png 2x" alt="icon-google" />
-				<span className="">Sign up with Google</span>
+				<span className="dark:text-whiteSoft">Sign up with Google</span>
 			</button>
-			<p className="mb-4 text-xs font-normal text-center lg:text-sm lg:mb-6 text-text2">
+			<p className="mb-4 text-xs font-normal text-center dark:font-light dark:text-whiteSoft lg:text-sm lg:mb-6 text-text2">
 				Or sign up with email
 			</p>
 			<form
@@ -72,6 +70,7 @@ const SignUpPage = () => {
 						error={errors.name?.message}
 					></Input>
 				</FormGroup>
+
 				{/* email  */}
 				<FormGroup>
 					<Label htmlFor="email">Email</Label>
@@ -83,6 +82,7 @@ const SignUpPage = () => {
 						error={errors.email?.message}
 					></Input>
 				</FormGroup>
+
 				{/* password  */}
 				<FormGroup>
 					<Label htmlFor="password">Password</Label>
@@ -100,13 +100,13 @@ const SignUpPage = () => {
 						checked={acceptTermm}
 						onClick={handleToggleTerm}
 					></Checkbox>
-					<p className="flex-1 text-sm text-text2">
+					<p className="flex-1 text-sm text-text2 dark:text-text3">
 						I agree to the{" "}
-						<span className="underline text-secondary cursor-pointer">
+						<span className="underline cursor-pointer text-secondary">
 							Terms of Use
 						</span>{" "}
 						and have read and understand the{" "}
-						<span className="underline text-secondary cursor-pointer">
+						<span className="underline cursor-pointer text-secondary">
 							Privacy policy
 						</span>
 						.
@@ -120,7 +120,6 @@ const SignUpPage = () => {
 					Create my account
 				</Button>
 			</form>
-			
 		</LayoutAuthentication>
 	);
 };

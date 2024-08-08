@@ -1,6 +1,9 @@
+import ErrorComponent from "components/common/ErrorComponent";
 import { IconEyeToggle } from "components/icons";
+import { useToggleValue } from "hooks/useToggleValue";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
+import { withErrorBoundary } from "react-error-boundary";
 import { useController } from "react-hook-form";
 
 const Input = ({
@@ -17,16 +20,17 @@ const Input = ({
 		defaultValue: "",
 	});
 
-	const [hide, setHide] = useState(true);
+	const { value: hide, handleToggleValue: handleToggleHide } =
+		useToggleValue(true);
 
 	return (
 		<div className="relative">
 			<input
-				type={type === "password" ? (hide ? "password" : 'text') : type}
+				type={type === "password" ? (hide ? "password" : "text") : type}
 				name={name}
 				placeholder={!error && placeholder}
-				className={`w-full pl-6 pr-16 py-4 text-sm font-medium border rounded-xl text-text1 placeholder:text-text4 placeholder:font-medium ${
-					error.length > 0 ? "border-error" : "border-strock"
+				className={`w-full pl-6 pr-16 py-4 dark:placeholder:text-text2 dark:bg-transparent text-sm font-medium border rounded-xl text-text1 placeholder:text-text4 placeholder:font-medium ${
+					error.length > 0 ? "border-error" : "border-strock dark:border-darkStrock"
 				}`}
 				{...field}
 				{...props}
@@ -38,8 +42,8 @@ const Input = ({
 			)}
 			{type === "password" && (
 				<div
-					className="absolute -translate-y-1/2 cursor-pointer right-6 top-1/2"
-					onClick={() => setHide(!hide)}
+					className="absolute -translate-y-1/2 cursor-pointer select-none right-6 top-1/2"
+					onClick={handleToggleHide}
 				>
 					<IconEyeToggle hide={hide}></IconEyeToggle>
 				</div>
@@ -56,4 +60,4 @@ Input.propTypes = {
 	error: PropTypes.string,
 };
 
-export default Input;
+export default withErrorBoundary(Input, { FallbackComponent: ErrorComponent });

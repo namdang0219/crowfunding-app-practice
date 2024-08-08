@@ -1,18 +1,44 @@
 import { Button } from "components/button";
+import { Checkbox } from "components/checbox";
 import FormGroup from "components/common/FormGroup";
 import { Input } from "components/input";
 import { Label } from "components/label";
 import LayoutAuthentication from "layouts/LayoutAuthentication";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = Yup.object({
+	name: Yup.string().required("This field is required"),
+	email: Yup.string()
+		.email("Invalid email")
+		.required("This field is required"),
+	password: Yup.string()
+		.min(8, "Password must be at least 8 charactors")
+		.required("This field is required"),
+});
 
 const SignUpPage = () => {
-	const { handleSubmit, control } = useForm();
+	const {
+		handleSubmit,
+		control,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		resolver: yupResolver(schema),
+		mode: "onSubmit",
+	});
+	const [acceptTermm, setAcceptTerm] = useState(false);
+
+	const handleToggleTerm = () => {
+		console.log(acceptTermm)
+		setAcceptTerm(!acceptTermm);
+	};
 
 	const handleSignUp = (values) => {
-		console.log(values)
-	}
+		console.log(values);
+	};
 
 	return (
 		<LayoutAuthentication heading="SignUp">
@@ -32,14 +58,18 @@ const SignUpPage = () => {
 			<p className="mb-4 text-xs font-normal text-center lg:text-sm lg:mb-6 text-text2">
 				Or sign up with email
 			</p>
-			<form onSubmit={handleSubmit(handleSignUp)} className="flex flex-col gap-3">
+			<form
+				onSubmit={handleSubmit(handleSignUp)}
+				className="flex flex-col gap-3"
+			>
 				{/* full name  */}
 				<FormGroup>
-					<Label htmlFor="fullName">Full Name *</Label>
+					<Label htmlFor="name">Full Name *</Label>
 					<Input
 						control={control}
-						name="fullName"
+						name="name"
 						placeholder="Jhon Doe"
+						error={errors.name?.message}
 					></Input>
 				</FormGroup>
 				{/* email  */}
@@ -50,6 +80,7 @@ const SignUpPage = () => {
 						name="email"
 						type="email"
 						placeholder="example@gmail.com"
+						error={errors.email?.message}
 					></Input>
 				</FormGroup>
 				{/* password  */}
@@ -60,24 +91,36 @@ const SignUpPage = () => {
 						name="password"
 						type="password"
 						placeholder="Create a password"
+						error={errors.password?.message}
 					></Input>
 				</FormGroup>
-				<div className="flex items-start mb-5 gap-x-5">
-					<span className="inline-block w-5 h-5 border rounded border-text4 shrink-0"></span>
+				<div className="flex items-start mt-2 mb-5 gap-x-5">
+					<Checkbox
+						name="term"
+						checked={acceptTermm}
+						onClick={handleToggleTerm}
+					></Checkbox>
 					<p className="flex-1 text-sm text-text2">
 						I agree to the{" "}
-						<span className="underline text-secondary">
+						<span className="underline text-secondary cursor-pointer">
 							Terms of Use
 						</span>{" "}
 						and have read and understand the{" "}
-						<span className="underline text-secondary">
+						<span className="underline text-secondary cursor-pointer">
 							Privacy policy
 						</span>
 						.
 					</p>
 				</div>
-				<Button type="submit" className="w-full bg-primary">Create my account</Button>
+				<Button
+					type="submit"
+					className="w-full bg-primary"
+					isLoading={isSubmitting}
+				>
+					Create my account
+				</Button>
 			</form>
+			
 		</LayoutAuthentication>
 	);
 };

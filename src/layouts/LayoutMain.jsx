@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 
 const LayoutMain = () => {
 	return (
-		<div className="flex flex-col w-full h-screen px-10 pt-10 bg-lite">
+		<div className="flex flex-col w-full h-screen px-10 pt-10 overflow-hidden bg-lite">
 			{/* top bar  */}
 			<div className="flex mb-[30px] items-center justify-between w-full h-[52px]">
 				{/* top bar left  */}
@@ -109,6 +109,7 @@ const LayoutMain = () => {
 					<div className="flex flex-col gap-[30px]">
             {navItems.map((nav) => (
               <NavLink
+							key={nav.label}
                 to={nav.path}
                 className={({ isActive }) =>
                   `w-full rounded-lg aspect-square flex items-center justify-center ${
@@ -123,7 +124,9 @@ const LayoutMain = () => {
 				</div>
 
 				{/* main  */}
-				<Outlet />
+				<div className="flex-1 pb-10 h-[calc(100vh-122px)] overflow-y-scroll scroll-hidden">
+					<Outlet />
+				</div>
 			</div>
 		</div>
 	);

@@ -1,3 +1,4 @@
-const { default: Button } = require("./Button");
+import Button from "./Button";
+import ButtonGoogle from "./ButtonGoogle";
 
-export {Button}
+export { Button, ButtonGoogle };

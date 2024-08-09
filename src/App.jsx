@@ -1,4 +1,8 @@
-import React, { lazy } from "react";
+import LayoutMain from "layouts/LayoutMain";
+import Campaign from "pages/Campaign";
+import Dashboard from "pages/Dashboard";
+import PageNotFound from "pages/PageNotFound";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
@@ -6,10 +10,24 @@ const SignInPage = lazy(() => import("./pages/SignInPage"));
 
 function App() {
 	return (
-		<Routes>
-			<Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
-			<Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
-		</Routes>
+		<Suspense>
+			<Routes>
+				<Route
+					path="/sign-up"
+					element={<SignUpPage></SignUpPage>}
+				></Route>
+				<Route
+					path="/sign-in"
+					element={<SignInPage></SignInPage>}
+				></Route>
+				<Route path="/" element={<LayoutMain></LayoutMain>}>
+					<Route path="/" element={<Dashboard></Dashboard>}></Route>
+					<Route path="/campaign" element={<Campaign></Campaign>}></Route>
+
+				</Route>
+				<Route path="*" element={<PageNotFound></PageNotFound>} />
+			</Routes>
+		</Suspense>
 	);
 }
 

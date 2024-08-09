@@ -30,7 +30,7 @@ const Input = ({
 				name={name}
 				placeholder={!error && placeholder}
 				className={`w-full pl-6 pr-16 py-4 dark:placeholder:text-text2 dark:bg-transparent text-sm font-medium border rounded-xl text-text1 placeholder:text-text4 placeholder:font-medium ${
-					error.length > 0 ? "border-error" : "border-strock dark:border-darkStrock"
+					error.length > 0 ? "border-error text-error" : "border-strock dark:border-darkStrock text-text1"
 				}`}
 				{...field}
 				{...props}

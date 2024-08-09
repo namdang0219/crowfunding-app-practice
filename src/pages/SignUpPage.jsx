@@ -1,4 +1,4 @@
-import { Button } from "components/button";
+import { Button, ButtonGoogle } from "components/button";
 import { Checkbox } from "components/checbox";
 import FormGroup from "components/common/FormGroup";
 import { Input } from "components/input";
@@ -49,10 +49,7 @@ const SignUpPage = () => {
 					Sign In
 				</Link>
 			</p>
-			<button className="flex items-center justify-center w-full py-3 mb-5 text-base font-semibold border dark:border-darkStrock text-text2 border-strock rounded-xl gap-x-3">
-				<img srcSet="/icon-google.png 2x" alt="icon-google" />
-				<span className="dark:text-whiteSoft">Sign up with Google</span>
-			</button>
+			<ButtonGoogle></ButtonGoogle>
 			<p className="mb-4 text-xs font-normal text-center dark:font-light dark:text-whiteSoft lg:text-sm lg:mb-6 text-text2">
 				Or sign up with email
 			</p>

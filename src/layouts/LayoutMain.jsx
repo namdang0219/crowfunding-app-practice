@@ -124,7 +124,7 @@ const LayoutMain = () => {
 				</div>
 
 				{/* main  */}
-				<div className="flex-1 pb-10 h-[calc(100vh-122px)] overflow-y-scroll scroll-hidden">
+				<div className="flex-1 pb-10 h-[calc(100vh-122px)] overflow-y-scroll scroll-hidden rounded-lg overflow-hidden">
 					<Outlet />
 				</div>
 			</div>

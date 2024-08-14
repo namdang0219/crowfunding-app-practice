@@ -1,4 +1,3 @@
-import LayoutMain from "layouts/LayoutMain";
 import Campaign from "pages/Campaign";
 import Dashboard from "pages/Dashboard";
 import PageNotFound from "pages/PageNotFound";
@@ -20,11 +19,8 @@ function App() {
 					path="/sign-in"
 					element={<SignInPage></SignInPage>}
 				></Route>
-				<Route path="/" element={<LayoutMain></LayoutMain>}>
-					<Route path="/" element={<Dashboard></Dashboard>}></Route>
-					<Route path="/campaign" element={<Campaign></Campaign>}></Route>
-
-				</Route>
+				<Route path="/" element={<Dashboard></Dashboard>}></Route>
+				<Route path="/campaign" element={<Campaign></Campaign>}></Route>
 				<Route path="*" element={<PageNotFound></PageNotFound>} />
 			</Routes>
 		</Suspense>
